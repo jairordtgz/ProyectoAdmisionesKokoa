@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Graph from "./components/Graph";
 import { ApiService } from "./services/apiService";
 import NavBar from "./components/NavBar";
 import Inputs from "./components/Inputs";
-import './index.css'
+import Favorites from "./components/Favorites";
+import "./index.css";
+
 function App() {
   const {
     query, setQuery,
@@ -13,44 +15,77 @@ function App() {
     urlResult, handleSubmit
   } = ApiService();
 
+  const [favorites, setFavorites] = useState([]);
+
+  const addFavorite = () => {
+    if (!query || !urlResult) return;
+    // Evitar duplicados
+    const exists = favorites.some(
+      fav => fav.query === query && fav.url === urlResult
+    );
+    if (!exists) {
+      setFavorites([...favorites, { query, url: urlResult }]);
+    }
+  };
+
+  const removeFavorite = (index) => {
+    setFavorites(favorites.filter((_, i) => i !== index));
+  };
+
   return (
     <div>
-      <NavBar/>
+      <NavBar />
 
-
-      <input
-        type="text"
-        placeholder="Versión MySQL"
-        value={version}
-        onChange={(e) => setVersion(e.target.value)}
-        style={{ width: "100%", marginBottom: 10 }}
-      />
-      <Inputs
-        query={query}
-        setQuery={setQuery}
-        explainJSON={explainJSON}
-        setExplainJSON={setExplainJSON}
-        explainTree={explainTree}
-        setExplainTree={setExplainTree}
-      />
-      <br/>
-
-      <div className="flex flex-col items-center mb-10">
-        <button className="bg-[#14213d] text-white px-10 py-3 border rounded shadow-lg animate-pulse"
-        onClick={handleSubmit}> Generar Grafo </button>
+      {/* Sección de favoritos */}
+      <div className="max-w-6xl mx-auto px-4">
+        <Favorites favorites={favorites} onRemove={removeFavorite} />
       </div>
 
-      
+      <div className="max-w-6xl mx-auto px-4 mt-6">
+        <input
+          type="text"
+          placeholder="Versión MySQL"
+          value={version}
+          onChange={(e) => setVersion(e.target.value)}
+          className="w-full mb-4 border px-2 py-1 rounded"
+        />
 
-      {urlResult && (
-        <div style={{ marginTop: 30 }}>
-          <h4>Resultado:</h4>
-          <a href={urlResult} target="_blank" rel="noreferrer">
-            Ver en pestaña nueva ↗️
-          </a>
-          <Graph explainUrl={urlResult} />
+        <Inputs
+          query={query}
+          setQuery={setQuery}
+          explainJSON={explainJSON}
+          setExplainJSON={setExplainJSON}
+          explainTree={explainTree}
+          setExplainTree={setExplainTree}
+        />
+
+        <div className="flex flex-col items-center my-6">
+          <button
+            className="bg-[#14213d] text-white px-10 py-3 border rounded shadow-lg"
+            onClick={handleSubmit}
+          >
+            Generar Grafo
+          </button>
         </div>
-      )}
+
+        {urlResult && (
+          <div style={{ marginTop: 30 }}>
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="font-semibold">Resultado:</h4>
+              <button
+                onClick={addFavorite}
+                className="bg-yellow-400 text-black px-4 py-1 rounded hover:bg-yellow-500 transition"
+              >
+                ⭐ Marcar como favorito
+              </button>
+            </div>
+            <a href={urlResult} target="_blank" rel="noreferrer">
+              Ver en pestaña nueva ↗️
+            </a>
+            <Graph explainUrl={urlResult} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
