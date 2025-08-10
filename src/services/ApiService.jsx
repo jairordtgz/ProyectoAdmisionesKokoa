@@ -19,7 +19,7 @@ export const ApiService = () => {
         query,
         version,
         explain_json: explainJSON,
-        explain_tree: explainTree || null,
+        explain_tree: explainTree || "",
       });
 
       setUrlResult(res.data.url);

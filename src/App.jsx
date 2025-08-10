@@ -36,7 +36,6 @@ function App() {
     <div>
       <NavBar />
 
-      {/* Sección de favoritos */}
       <div className="max-w-6xl mx-auto px-4">
         <Favorites favorites={favorites} onRemove={removeFavorite} />
       </div>
