@@ -23,6 +23,7 @@ function App() {
     const exists = favorites.some(
       fav => fav.query === query && fav.url === urlResult
     );
+    
     if (!exists) {
       setFavorites([...favorites, { query, url: urlResult }]);
     }
@@ -60,7 +61,7 @@ function App() {
 
         <div className="flex flex-col items-center my-6">
           <button
-            className="bg-[#14213d] text-white px-10 py-3 border rounded shadow-lg"
+            className="bg-[#0c2041] text-white px-10 py-3 border rounded shadow-lg"
             onClick={handleSubmit}
           >
             Generar Grafo
@@ -90,3 +91,7 @@ function App() {
 }
 
 export default App;
+
+
+//logo de pestaña y nombre, poner favoritos a la derecha y añadir un cargando...
+// en el caso de imagenes poner que ya esta cargado 
