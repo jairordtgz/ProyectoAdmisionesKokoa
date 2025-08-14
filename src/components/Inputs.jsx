@@ -2,7 +2,7 @@ import React from "react";
 const Inputs = ({ query, setQuery, explainJSON, setExplainJSON, explainTree, setExplainTree }) => {
 
     return (
-        <div className="flex flex-col ml-10 mr-10 justify-center">
+        <div className="flex flex-col ml-10 mr-10">
             <div className="flex space-x-10 mb-6">
                 <div className="flex flex-col flex-1">
                     <label htmlFor="queryInput" className="mb-2 font-semibold text-lg">Consulta SQL</label>
@@ -26,7 +26,7 @@ const Inputs = ({ query, setQuery, explainJSON, setExplainJSON, explainTree, set
                 </div>
             </div>
 
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col">
                 <label htmlFor="treeInput" className="mb-2 font-semibold w-1/2 text-lg">EXPLAIN FORMAT = TREE (opcional)</label>
                 <textarea
                     id="treeInput"

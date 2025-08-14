@@ -14,10 +14,10 @@ function Favorites({ favorites, onRemove }) {
     <div className="mt-6">
       <h2 className="text-xl font-semibold mb-4">⭐ Consultas y grafos favoritos</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-300 text-sm">
+        <table className="border border-gray-300 text-sm">
           <thead className="bg-gray-100">
             <tr>
-              <th className="border px-4 py-2 text-left w-2/3">Consulta</th>
+              <th className="border px-4 py-2 text-left">Consulta</th>
               <th className="border px-4 py-2 text-left">Ver grafo</th>
               <th className="border px-4 py-2 text-left">Acción</th>
             </tr>
