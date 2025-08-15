@@ -7,6 +7,7 @@ export const ApiService = () => {
   const [explainJSON, setExplainJSON] = useState("");
   const [explainTree, setExplainTree] = useState("");
   const [urlResult, setUrlResult] = useState(null);
+  const [loading, setLoading] = useState(false); 
 
   const handleSubmit = async () => {
     if (!query.trim() || !explainJSON.trim()) {
@@ -15,6 +16,7 @@ export const ApiService = () => {
     }
 
     try {
+      setLoading(true); 
       const res = await axios.post("https://api.mysqlexplain.com/v2/explains", {
         query,
         version,
@@ -23,7 +25,8 @@ export const ApiService = () => {
       });
 
       setUrlResult(res.data.url);
-      console.log(res.data.url)
+      console.log(res.data.url);
+      setLoading(true);
     } catch (error) {
       if (error.response && error.response.status === 422) {
         const errorData = error.response.data;
@@ -32,6 +35,8 @@ export const ApiService = () => {
       } else {
         alert("Error: " + error.message);
       }
+    } finally{
+      setLoading(false); 
     }
   };
 
@@ -41,6 +46,7 @@ export const ApiService = () => {
     explainJSON, setExplainJSON,
     explainTree, setExplainTree,
     urlResult, setUrlResult,
+    loading, setLoading,
     handleSubmit
   };
 };

@@ -5,30 +5,28 @@ import NavBar from "./components/NavBar";
 import Inputs from "./components/Inputs";
 import Favorites from "./components/Favorites";
 import "./index.css";
-
+import "./Spinner.css"
 function App() {
   const {
     query, setQuery,
     version, setVersion,
     explainJSON, setExplainJSON,
     explainTree, setExplainTree,
-    urlResult, handleSubmit
+    urlResult, handleSubmit,
+    loading, setLoading
   } = ApiService();
 
   const [favorites, setFavorites] = useState([]);
 
-  const addFavorite = () => {
-    if (!query || !urlResult) return;
-    // Evitar duplicados
-    const exists = favorites.some(
+  const exists = favorites.some(
     fav => JSON.stringify(fav.explainJSON) === JSON.stringify(explainJSON)
-    );
+  );
 
-    
-    if (!exists) {
-      setFavorites([...favorites, { query, url: urlResult, explainJSON }]);
-    }
+  const addFavorite = () => {
+    if (!query || !urlResult || exists) return;
+    setFavorites([...favorites, { query, url: urlResult, explainJSON }]);
   };
+
 
   const removeFavorite = (index) => {
     setFavorites(favorites.filter((_, i) => i !== index));
@@ -64,17 +62,30 @@ return (
               className="bg-[#0c2041] text-white px-10 py-3 border rounded shadow-lg"
               onClick={handleSubmit}
             >
-              Generar Grafo
+              {loading ? "Cargando..." : "Generar Grafo"}
             </button>
           </div>
 
-          {urlResult && (
+
+
+          {loading && (
+            <div className="flex justify-center my-4">
+              <span className="loader"> </span>
+            </div>
+          )}
+
+          {urlResult && !loading &&(
             <div style={{ marginTop: 30 }}>
               <div className="flex items-center justify-between mb-2">
                 <h4 className="font-semibold">Resultado:</h4>
                 <button
                   onClick={addFavorite}
-                  className="bg-yellow-400 text-black px-4 py-1 rounded hover:bg-yellow-500 transition"
+                  disabled={exists}
+                  className={`bg-yellow-400 text-black px-4 py-1 rounded hover:bg-yellow-500 transition ${
+                    exists ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "bg-yellow-400 text-black hover:bg-yellow-500"    
+
+                  }`}
                 >
                   ⭐ Añadir a favoritos
                 </button>
@@ -85,12 +96,15 @@ return (
               <Graph explainUrl={urlResult} />
             </div>
           )}
+
+          
         </div>
 
         {/* Columna derecha */}
         <div className="flex-1 basis-3/10">
           <Favorites favorites={favorites} onRemove={removeFavorite} />
         </div>
+
       </div>
     </div>
   );
@@ -99,8 +113,8 @@ return (
 export default App;
 
 
-//logo de pestaña y nombre
-// poner favoritos a la derecha
-// añadir un cargando...
+//logo de pestaña y nombre OK
+// poner favoritos a la derecha OK 
+// añadir un cargando... OK 
 // en el caso de imagenes poner que ya esta cargado, en el boton de añadir a favorito
-// si ya esta cargado añadirle un bloqueo al pasar el mouse 
+// si ya esta cargado añadirle un bloqueo al pasar el mouse  OK

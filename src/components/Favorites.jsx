@@ -11,7 +11,7 @@ function Favorites({ favorites, onRemove }) {
   }
 
   return (
-    <div className="mt-6">
+    <div className="mt-6 relative bg-[#FCF2E8] rounded-lg overflow-hidden shadow">
       <h2 className="text-xl font-semibold mb-4">⭐ Consultas y grafos favoritos</h2>
       <div className="overflow-x-auto">
         <table className="border border-gray-300 text-sm">
