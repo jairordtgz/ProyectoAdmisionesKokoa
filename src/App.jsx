@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Graph from "./components/Graph";
-import { ApiService } from "./services/apiService";
+import { ApiService } from "./services/ApiService";
 import NavBar from "./components/NavBar";
 import Inputs from "./components/Inputs";
 import Favorites from "./components/Favorites";
@@ -13,7 +13,8 @@ function App() {
     explainJSON, setExplainJSON,
     explainTree, setExplainTree,
     urlResult, handleSubmit,
-    loading, setLoading
+    loading, setLoading,
+    cleanForm
   } = ApiService();
 
   const [favorites, setFavorites] = useState([]);
@@ -57,13 +58,22 @@ return (
             setExplainTree={setExplainTree}
           />
 
-          <div className="flex flex-col items-center my-6">
+          <div className="flex flex-row justify-center my-6">
             <button
               className="bg-[#0c2041] text-white px-10 py-3 border rounded shadow-lg"
               onClick={handleSubmit}
             >
               {loading ? "Cargando..." : "Generar Grafo"}
             </button>
+            {urlResult && (
+              <button
+                className="bg-[#0c2041] text-white px-10 py-3 border rounded shadow-lg"
+                onClick={cleanForm}
+              >
+              Limpiar 🧹
+              </button>
+            )}
+
           </div>
 
 
@@ -90,9 +100,9 @@ return (
                   ⭐ Añadir a favoritos
                 </button>
               </div>
-              <a href={urlResult} target="_blank" rel="noreferrer">
+              {/* <a href={urlResult} target="_blank" rel="noreferrer">
                 Ver en pestaña nueva ↗️
-              </a>
+              </a> */}
               <Graph explainUrl={urlResult} />
             </div>
           )}
