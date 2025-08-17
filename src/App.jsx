@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import Graph from "./components/Graph";
 import { ApiService } from "./services/ApiService";
 import NavBar from "./components/NavBar";
@@ -17,7 +17,22 @@ function App() {
     cleanForm
   } = ApiService();
 
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    try{
+      const stored = localStorage.getItem("favorites");  //recupera elementos guardados 
+      console.log(stored); 
+      return stored ? JSON.parse(stored) : []; // si hay guardados, los transforma de strings a array de objetos y los muestra
+    } catch{
+      return []; //sino retorna vacio
+    }
+  });
+
+    // cargar cada favorito a la tabla
+  useEffect(() => {
+    localStorage.setItem("favorites",JSON.stringify(favorites)); 
+  },[favorites]); 
+
+
 
   const exists = favorites.some(
     fav => JSON.stringify(fav.explainJSON) === JSON.stringify(explainJSON)
@@ -36,10 +51,7 @@ function App() {
 return (
     <div>
       <NavBar />
-
-      {/* Contenedor principal de dos columnas */}
       <div className="px-4 mt-6 flex gap-6">
-        {/* Columna izquierda */}
         <div className="flex-1 basis-7/10">
           <input
             type="text"
@@ -100,9 +112,7 @@ return (
                   ⭐ Añadir a favoritos
                 </button>
               </div>
-              {/* <a href={urlResult} target="_blank" rel="noreferrer">
-                Ver en pestaña nueva ↗️
-              </a> */}
+
               <Graph explainUrl={urlResult} />
             </div>
           )}
@@ -110,7 +120,6 @@ return (
           
         </div>
 
-        {/* Columna derecha */}
         <div className="flex-1 basis-3/10">
           <Favorites favorites={favorites} onRemove={removeFavorite} />
         </div>
@@ -126,5 +135,5 @@ export default App;
 //logo de pestaña y nombre OK
 // poner favoritos a la derecha OK 
 // añadir un cargando... OK 
-// en el caso de imagenes poner que ya esta cargado, en el boton de añadir a favorito
-// si ya esta cargado añadirle un bloqueo al pasar el mouse  OK
+// si ya esta cargado añadirle un bloqueo al pasar el mouse (exists)  OK
+// guardar con localstorage OK 
