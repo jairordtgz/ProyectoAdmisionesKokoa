@@ -6,7 +6,7 @@ const NavBar = () => {
         <nav className="bg-[#0c2041] text-light h-[77px]"> 
             <div className="flex items-center h-full px-6">
                 <img 
-                    src="logo" 
+                    src={logo}
                     alt="logo" 
                     className="h-16 w-auto mr-6 ml-30"
                 />
