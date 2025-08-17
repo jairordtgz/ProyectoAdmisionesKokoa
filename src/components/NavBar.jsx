@@ -1,6 +1,6 @@
 import React from "react";
 import "../index.css";
-import {logo} from "./assets/JsonAGrafoNB.png"
+import logo from "../assets/JsonAGrafoNB.png"
 const NavBar = () => {
     return (
         <nav className="bg-[#0c2041] text-light h-[77px]"> 
