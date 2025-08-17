@@ -1,11 +1,12 @@
 import React from "react";
 import "../index.css";
+import {logo} from "../assets/JsonAGrafoNB.png"
 const NavBar = () => {
     return (
         <nav className="bg-[#0c2041] text-light h-[77px]"> 
             <div className="flex items-center h-full px-6">
                 <img 
-                    src="src/assets/JsonAGrafoNB.png" 
+                    src="logo" 
                     alt="logo" 
                     className="h-16 w-auto mr-6 ml-30"
                 />
