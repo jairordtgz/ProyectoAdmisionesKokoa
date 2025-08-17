@@ -16,29 +16,23 @@ export const ApiService = () => {
     }
     setLoading(true); 
     try {
-
       const res = await axios.post("https://api.mysqlexplain.com/v2/explains", {
         query,
         version,
         explain_json: explainJSON,
         explain_tree: explainTree || "",
       });
-
       setUrlResult(res.data.url);
       console.log(res.data.url);
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        const errorData = error.response.data;
-        const messages = errorData.errors?.map(e => `• ${e.attribute}: ${e.message}`)?.join("\n") || "Error de validación";
-        alert("Errores encontrados:\n" + messages);
-      } else if (error.response && error.response.status === 400){
-        const errorData = error.response.data; 
-        alert(`Error: ${errorData.error}: ${errorData.message}`);
-      
-      }  else {
-        alert("Error: " + error.message);
-        
-      }
+    } catch (error) { 
+        if (error.response && (error.response.status === 422 || error.response.status === 400)) {
+          const errorData = error.response.data; 
+          let mensaje = errorData.errors?.map(e => `• ${e.attribute}: ${e.message}`)?.join("\n") || "";
+          if (errorData.error && errorData.message){
+            mensaje += `${errorData.error}: ${errorData.message}`;
+          }
+          alert("Errores encontrados:\n" + mensaje);
+        }
     } finally{
       setLoading(false); 
     }
