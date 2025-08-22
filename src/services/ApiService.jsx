@@ -28,7 +28,7 @@ export const ApiService = () => {
         if (error.response && (error.response.status === 422 || error.response.status === 400)) {
           const errorData = error.response.data; 
           let mensaje = errorData.errors?.map(e => `• ${e.attribute}: ${e.message}`)?.join("\n") || "";
-          if (errorData.error && errorData.message){
+          if (errorData.error || errorData.message){
             mensaje += `${errorData.error}: ${errorData.message}`;
           }
           alert("Errores encontrados:\n" + mensaje);

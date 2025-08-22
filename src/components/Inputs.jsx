@@ -20,6 +20,7 @@ const Inputs = ({ query, setQuery, explainJSON, setExplainJSON, explainTree, set
                     <textarea
                         id="jsonInput"
                         className="h-66 border rounded p-4 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                        placeholder="PEGUE AQUÍ AL EJECUTAR EXPLAIN FORMAT = JSON + CONSULTA"
                         value={explainJSON}
                         onChange={(e) => setExplainJSON(e.target.value)}
                     />
@@ -27,11 +28,12 @@ const Inputs = ({ query, setQuery, explainJSON, setExplainJSON, explainTree, set
             </div>
 
             <div className="flex flex-col">
-                <label htmlFor="treeInput" className="mb-2 font-semibold w-1/2 text-lg">EXPLAIN FORMAT = TREE (opcional)</label>
+                <label htmlFor="treeInput" className="mb-2 font-semibold w-1/2 text-lg">Salida TREE (opcional) </label>
                 <textarea
                     id="treeInput"
                     className="w-1/2 h-66 border rounded p-4 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize:none"
                     value={explainTree}
+                    placeholder="PEGUE AQUÍ AL EJECUTAR EXPLAIN FORMAT = TREE + CONSULTA"
                     onChange={(e) => setExplainTree(e.target.value)}
                 />      
             </div>

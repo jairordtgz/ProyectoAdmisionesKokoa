@@ -88,8 +88,6 @@ return (
 
           </div>
 
-
-
           {loading && (
             <div className="flex justify-center my-4">
               <span className="loader"> </span>
@@ -105,8 +103,7 @@ return (
                   disabled={exists}
                   className={`bg-yellow-400 text-black px-4 py-1 rounded hover:bg-yellow-500 transition ${
                     exists ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-yellow-400 text-black hover:bg-yellow-500"    
-
+                    : "bg-yellow-400 text-black hover:bg-yellow-500"
                   }`}
                 >
                   ⭐ Añadir a favoritos
@@ -130,10 +127,3 @@ return (
 }
 
 export default App;
-
-
-//logo de pestaña y nombre OK
-// poner favoritos a la derecha OK 
-// añadir un cargando... OK 
-// si ya esta cargado añadirle un bloqueo al pasar el mouse (exists)  OK
-// guardar con localstorage OK 
