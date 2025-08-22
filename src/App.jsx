@@ -6,6 +6,7 @@ import Inputs from "./components/Inputs";
 import Favorites from "./components/Favorites";
 import "./index.css";
 import "./Spinner.css"
+
 function App() {
   const {
     query, setQuery,
@@ -13,38 +14,36 @@ function App() {
     explainJSON, setExplainJSON,
     explainTree, setExplainTree,
     urlResult, handleSubmit,
-    loading, setLoading,
-    cleanForm
+    loading, cleanForm
   } = ApiService();
 
-  const [favorites, setFavorites] = useState(() => {
+  const [favorites, setFavorites] = useState(() => {  // guardar datos o crear elementos que cambian con el tiempo
     try{
       const stored = localStorage.getItem("favorites");  //recupera elementos guardados 
-      console.log(stored); 
       return stored ? JSON.parse(stored) : []; // si hay guardados, los transforma de strings a array de objetos y los muestra
     } catch{
       return []; //sino retorna vacio
     }
   });
 
-    // cargar cada favorito a la tabla
+    // mostrar cada favorito a la tabla
   useEffect(() => {
     localStorage.setItem("favorites",JSON.stringify(favorites)); 
   },[favorites]); 
 
 
 
-  const exists = favorites.some(
+  const exists = favorites.some( //some es metodo de arreglos (array.some(element => condition))
     fav => JSON.stringify(fav.explainJSON) === JSON.stringify(explainJSON)
   );
 
-  const addFavorite = () => {
+  const addFavorite = () => { // [...array, object]
     if (!query || !urlResult || exists) return;
     setFavorites([...favorites, { query, url: urlResult, explainJSON }]);
   };
 
 
-  const removeFavorite = (index) => {
+  const removeFavorite = (index) => { // (element,index)  => condition
     setFavorites(favorites.filter((_, i) => i !== index));
   };
 

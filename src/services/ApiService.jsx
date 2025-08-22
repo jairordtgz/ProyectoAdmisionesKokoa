@@ -10,11 +10,13 @@ export const ApiService = () => {
   const [loading, setLoading] = useState(false); 
 
   const handleSubmit = async () => {
+
     if (!query.trim() || !explainJSON.trim()) {
       alert("Debes ingresar tanto el query como el EXPLAIN FORMAT=JSON (como string).\nEstos campos son obligatorios.");
       return;
     }
     setLoading(true); 
+
     try {
       const res = await axios.post("https://api.mysqlexplain.com/v2/explains", {
         query,
@@ -22,9 +24,12 @@ export const ApiService = () => {
         explain_json: explainJSON,
         explain_tree: explainTree || "",
       });
+
       setUrlResult(res.data.url);
       console.log(res.data.url);
+
     } catch (error) { 
+
         if (error.response && (error.response.status === 422 || error.response.status === 400)) {
           const errorData = error.response.data; 
           let mensaje = errorData.errors?.map(e => `• ${e.attribute}: ${e.message}`)?.join("\n") || "";
@@ -33,6 +38,7 @@ export const ApiService = () => {
           }
           alert("Errores encontrados:\n" + mensaje);
         }
+        
     } finally{
       setLoading(false); 
     }
